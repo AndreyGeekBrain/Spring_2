@@ -29,8 +29,6 @@ public class CartController {
     }
     @PostMapping("/decrease/{id}")
     public void decreaseCount(@PathVariable Long id, @RequestBody String cartName){
-        System.out.println("BBBBBBBBBBBB"+id);
-        System.out.println("BBBBBBBBBBBB"+cartName);
         service.decreaseCount(id, cartName);
     }
 
