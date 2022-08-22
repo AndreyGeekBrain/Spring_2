@@ -42,19 +42,6 @@ public class Cart {
         return false;
     }
 
-//    public void delProductCount(Long id) {
-//        for (int i = 0; i < items.size(); i++) {
-//            if (items.get(i).getProductId().equals(id)) {
-//                int count = items.get(i).getQuantity() - 1;
-//                if (count > 0) {
-//                    recalculate();
-//                } else {
-//                    items.remove(i);
-//                }
-//            }
-//        }
-//    }
-
     public void addProduct(Product product){
         if(addProductCount(product.getId())){
             return;
