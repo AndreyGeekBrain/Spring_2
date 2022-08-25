@@ -24,17 +24,7 @@ public class CartController {
 
     @PostMapping("/clear")
     public void clearCart(@RequestBody String cartName){
-
         service.getCurrentCart(cartName).clear();
-    }
-    @PostMapping("/decrease/{id}")
-    public void decreaseCount(@PathVariable Long id, @RequestBody String cartName){
-        service.decreaseCount(id, cartName);
-    }
-
-    @PostMapping("/deleteproduct/{id}")
-    public void deleteProduct(@PathVariable Long id, @RequestBody String cartName){
-        service.deleteProduct(id, cartName);
     }
 
 }

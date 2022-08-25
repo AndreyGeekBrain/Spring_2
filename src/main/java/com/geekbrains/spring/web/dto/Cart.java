@@ -7,7 +7,6 @@ import org.springframework.cache.CacheManager;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 @Data
 public class Cart {
@@ -20,16 +19,9 @@ public class Cart {
     }
 
     public Cart(String cartName, CacheManager manager){
-        Cart cart = manager.getCache("Cart").get(cartName, Cart.class);
-        if(Optional.ofNullable(cart).isPresent()){
-            this.items = cart.getItems();
-            this.totalPrice = cart.getTotalPrice();
-        } else {
             this.items = new ArrayList<>();
             this.totalPrice = 0;
-            manager.getCache("Cart").put(cartName, Cart.class);
         }
-    }
 
     public boolean addProductCount(Long id){
         for(OrderItemDto o: items){
