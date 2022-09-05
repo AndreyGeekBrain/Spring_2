@@ -14,10 +14,6 @@
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
             })
-            .when('/making_an_order', {
-                templateUrl: 'making_an_order/making_an_order.html',
-                controller: 'making_an_orderController'
-            })
             .otherwise({
                 redirectTo: '/'
             });

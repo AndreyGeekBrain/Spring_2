@@ -15,6 +15,21 @@ angular.module('market-front').controller('cartController', function ($scope, $r
             });
     }
 
+    $scope.checkOut = function () {
+        $http({
+            url: contextPath + '/orders/' + $localStorage.cartName,
+            method: 'POST',
+            data: {orderDetailsDto: $scope.orderDetails}
+        }).then(function (response) {
+                $scope.loadCart();
+                $scope.orderDetails = null
+            });
+    };
+
+    $scope.disabledCheckOut = function () {
+        alert("Для оформления заказа необходимо войти в учетную запись");
+    }
+
     $scope.loadCart();
 
 });
