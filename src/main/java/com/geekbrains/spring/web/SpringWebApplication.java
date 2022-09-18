@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
-@EnableCaching
+@EnableCaching // Тут мы включаем кеширование в спринг
 public class SpringWebApplication {
 	// Домашнее задание:
 	// Вспомнить\разобраться с кодом

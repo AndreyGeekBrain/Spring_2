@@ -4,7 +4,7 @@ import com.geekbrains.spring.web.entities.Product;
 import lombok.Data;
 
 @Data
-public class OrderItemDto {
+public class  OrderItemDto {
 
     private Long productId;
     private String title;
@@ -19,7 +19,7 @@ public class OrderItemDto {
         this.pricePerProduct = product.getPrice();
         this.price = product.getPrice();
     }
-
+// Метод по увеличению количества в позицию товара.
     public void changeQuantity(int delta){
         this.quantity += delta;
         this.price = this.quantity * this.pricePerProduct;

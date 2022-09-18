@@ -12,11 +12,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CartService {
     private final ProductsService productsService;
-    private final CacheManager cacheManager;
+    private final CacheManager cacheManager; // Включили @EnableCaching, можем заинжектить CacheManager
     private Cart cart;
 
-    public Cart getCurrentCart(String cartName) {
+    public Cart  getCurrentCart(String cartName) {
+//      По умолчанию у нас нет "коробочек кеш - это как аналог с именем переменной", если запросить cacheManager.getCache("Cart"),
+//      кеш с именем Cart которой нет, то спринг ее создаст.
         cart = cacheManager.getCache("Cart").get(cartName, Cart.class);
+        // проверка лежит кли корзина в кеше, если нет то мы туда кладем корзину
         if (!Optional.ofNullable(cart).isPresent()) {
             cart = new Cart(cartName, cacheManager);
             cacheManager.getCache("Cart").put(cartName, cart);

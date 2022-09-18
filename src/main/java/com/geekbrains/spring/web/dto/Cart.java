@@ -3,14 +3,13 @@ package com.geekbrains.spring.web.dto;
 import com.geekbrains.spring.web.entities.Product;
 import lombok.Data;
 import org.springframework.cache.CacheManager;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 @Data
-public class Cart {
+public class  Cart {
 
     private List<OrderItemDto> items;
     private  int totalPrice;
@@ -31,25 +30,34 @@ public class Cart {
         }
     }
 
+    /*
+    Данный метод вызывается методом addProduct() и просто проверяет есть ли продукт в корзине, то есть добавлялся ли он ранее.
+    Если есть, то идем в метод changeQuantity и меняем количество существующего товара.
+    */
     public boolean addProductCount(Long id){
         for(OrderItemDto o: items){
             if(o.getProductId().equals(id)){
                 o.changeQuantity(1);
-                recalculate();
+                recalculate(); // увеличения количества пересчитываем стоимость всей корзины.
                 return true;
             }
         }
         return false;
     }
-
+/*
+Каждый раз нажимая на фронте кнопку "добавить продукт" имеем два сценария:
+Первый продукт был ранее добавлен и мы увеличиваем его количество в той же сущ. строке на фронте.
+Второй продукт не был ранее добавлен на фронт и мы его далее добавляем.
+*/
     public void addProduct(Product product){
+        // Если продукт был добавлен, то после проверки ниже мы выйдем из метода.
         if(addProductCount(product.getId())){
             return;
         }
         items.add(new OrderItemDto(product));
         recalculate();
     }
-
+    // Метод для пересчета общей цены в корзине.
     private void recalculate(){
         totalPrice = 0;
         for(OrderItemDto o: items){

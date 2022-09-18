@@ -1,10 +1,18 @@
 angular.module('app', ['ngStorage']).controller('indexController', function ($scope, $rootScope, $http, $localStorage) {
+
+    // $scope - можно воспринимать как контекст который видит html, аналог model для mvc
+    // $localStorage - это память в браузере пользователя, область видимости данных которой только js.
+
+    // Вызовы функции ниже проходят в html
+
     const contextPath = 'http://localhost:8189/app/api/v1';
 
+    // Если у нас нет cartName, то мы будем его присваивать рандомно.
     if(!$localStorage.cartName){
         $localStorage.cartName = "cart_" + (Math.random() * 100);
     }
 
+    // Если пользователь авторизован.
     if ($localStorage.springWebUser) {
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
         $localStorage.cartName = "cart_" + $localStorage.springWebUser.username;
@@ -55,10 +63,14 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
         $http.defaults.headers.common.Authorization = '';
     };
 
+    // $scope.addToCart - это означает, что мы создаем метод.
     $scope.addToCart = function (productId) {
         console.log(productId);
+        // отправили запрос на бекэнд
         $http.post('http://localhost:8189/app/api/v1/carts/add/' + productId, $localStorage.cartName)
+            // получили ответ от бекэнда 200 ОК
             .then(function (response) {
+                // вызвали метод loadCart(), который находился в контексте. Он перегрузит продукт.
                 $scope.loadCart();
             });
     }
@@ -81,9 +93,11 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
             });
     }
 
+
     $scope.loadCart = function () {
         $http.post('http://localhost:8189/app/api/v1/carts', $localStorage.cartName)
             .then(function (response) {
+                // Создаем переменную Cart в контексте и в нее кладем результат ответа.
                 $scope.Cart = response.data;
             });
     }
