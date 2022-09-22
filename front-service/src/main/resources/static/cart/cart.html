@@ -1,31 +1,25 @@
 <div>
 <h3>Корзина</h3>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <td>Название товара</td>
-            <td>Количество</td>
-            <td>Уменьшить количество</td>
-            <td>Цена</td>
-            <td>Удалить</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="item in Cart.items">
-            <td>{{item.title}}</td>
-            <td>{{item.quantity}}</td>
-            <td>{{item.pricePerProduct + ' x ' + item.quantity + ' = ' + item.price}}</td>
-            <td><button class="btn btn-primary" ng-click="decreaseCount(item.productId)">-</button></td>
-            <td><button class="btn btn-primary" ng-click="delProduct(item.productId)">Удалить</button></td>
-        </tr>
-
-        <tr>
-            <td>Итого</td>
-            <td>{{Cart.totalPrice}}</td>
-        </tr>
-        </tbody>
-    </table>
-    <p>
+<table class="table table-hover">
+    <tr>
+        <td>Название товара</td>
+        <td>Количество</td>
+        <td>Цена</td>
+    </tr>
+    <tbody>
+    <tr ng-repeat="item in Cart.items">
+        <td>{{item.title}}</td>
+        <td>{{item.quantity}}</td>
+        <td>{{item.pricePerProduct + ' x ' + item.quantity + ' = ' + item.price}}</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Итого</td>
+        <td>{{Cart.totalPrice}}</td>
+    </tr>
+    </tbody>
+</table>
+<p>
     <button class="btn btn-secondary" ng-click="clearCart()">Очистить корзину</button>
     <button class="btn btn-danger" ng-click="showCurrentUserInfo()">Обо мне</button>
 </p>

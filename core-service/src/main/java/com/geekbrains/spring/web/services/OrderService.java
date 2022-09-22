@@ -9,6 +9,7 @@ import com.geekbrains.spring.web.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +20,12 @@ import java.util.stream.Collectors;
 public class OrderService {
 
     private final ProductsService productsService;
-    private final CartService cartService;
     private final OrderRepository orderRepository;
+    private final RestTemplate cartTemplate;
 
     @Transactional
     public void createOrder(String username, OrderDetailsDto orderDetailsDto, String cartName){
-        Cart currentCart = cartService.getCurrentCart(cartName);
+        Cart currentCart = cartTemplate.postForObject("http://localhost:8187/web-market-cart/api/v1/carts", cartName, Cart.class);
         Order order = new Order();
         order.setAddress(orderDetailsDto.getAddress());
         order.setPhone(orderDetailsDto.getPhone());

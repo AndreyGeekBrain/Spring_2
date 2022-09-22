@@ -6,7 +6,7 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
 @EnableCaching
-public class SpringWebApplication {
+public class CoreApp {
 	// Домашнее задание:
 	// Реализовать перехватчик методов удаления и
 	// *Вывести пользователя, который залогинился
@@ -14,6 +14,6 @@ public class SpringWebApplication {
 
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringWebApplication.class, args);
+		SpringApplication.run(CoreApp.class, args);
 	}
 }
