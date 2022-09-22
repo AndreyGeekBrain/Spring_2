@@ -1,8 +1,7 @@
-package com.geekbrains.spring.web.services;
+package com.geekbrains.spring.web.cart.services;
 
-import com.geekbrains.spring.web.dto.Cart;
-import com.geekbrains.spring.web.entities.Product;
-import com.geekbrains.spring.web.exceptions.ResourceNotFoundException;
+import com.geekbrains.spring.web.cart.dto.Cart;
+import com.geekbrains.spring.web.cart.dto.ProductDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,14 +9,16 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
-    private final ProductsService productsService;
     @Qualifier("test")
     private final CacheManager cacheManager;
+    private final RestTemplate restTemplate; //ProductService
     @Value("${spring.cache.user.name}")
     private String CACHE_CART;
     private Cart cart;
@@ -36,7 +37,8 @@ public class CartService {
     public Cart addProductByIdToCart(Long id, String cartName){
         Cart cart = getCurrentCart(cartName);
         if(!cart.addProductCount(id)) {
-            Product product = productsService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти продукт"));
+            ProductDto product =
+                    restTemplate.getForObject("http://localhost:8189/web-market-core/api/v1/products/" + id, ProductDto.class);
             cart.addProduct(product);
         }
             return cart;
@@ -48,15 +50,4 @@ public class CartService {
         cart.clear();
         return cart;
     }
-
-    public void decreaseCount(Long id, String cartName) {
-        Cart cart = getCurrentCart(cartName);
-        cart.decreaseProduct(id);
-    }
-
-    public void deleteProduct(Long id, String cartName) {
-        Cart cart = getCurrentCart(cartName);
-        cart.removeProduct(id);
-    }
-
 }

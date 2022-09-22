@@ -1,4 +1,4 @@
-package com.geekbrains.spring.web.configs;
+package com.geekbrains.spring.web.cart.configs;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -12,6 +12,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -56,6 +57,11 @@ public class CacheConfig {
                 .withInitialCacheConfigurations(configMap)
                 .build();
         return cacheManager;
+    }
+
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
     }
 
 

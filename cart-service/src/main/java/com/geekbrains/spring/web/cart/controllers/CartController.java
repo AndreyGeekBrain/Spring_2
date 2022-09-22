@@ -1,9 +1,8 @@
-package com.geekbrains.spring.web.controllers;
+package com.geekbrains.spring.web.cart.controllers;
 
-import com.geekbrains.spring.web.dto.Cart;
-import com.geekbrains.spring.web.services.CartService;
+import com.geekbrains.spring.web.cart.dto.Cart;
+import com.geekbrains.spring.web.cart.services.CartService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.CacheManager;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,16 +24,6 @@ public class CartController {
     @PostMapping("/clear")
     public void clearCart(@RequestBody String cartName){
         service.clear(cartName);
-    }
-
-    @PostMapping("/decrease/{id}")
-    public void decreaseCount(@PathVariable Long id, @RequestBody String cartName){
-        service.decreaseCount(id, cartName);
-    }
-
-    @PostMapping("/deleteproduct/{id}")
-    public void deleteProduct(@PathVariable Long id, @RequestBody String cartName){
-        service.deleteProduct(id, cartName);
     }
 
 }
